@@ -13,11 +13,12 @@
             <local:FlightPlanDb x:Name="FpdControl" Canvas.Left="395" Canvas.Top="10" FplUpdated="FlightPlanDb_FplUpdated" Height="408" Width="291" BorderBrush="Black" BorderThickness="1" Padding="1"/>
             <local:AircraftStatus x:Name="AircraftStateControl" Canvas.Left="691" Canvas.Top="10" Height="408" Width="298" BorderBrush="Black" BorderThickness="1" Padding="1"/>
         </Canvas>
-        <Canvas x:Name="UnConnectedCanvas" Cursor="Wait" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" Canvas.Left="-259" Canvas.Top="-58" Visibility="Collapsed">
+        <Canvas x:Name="UnConnectedCanvas" Cursor="Wait" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" Canvas.Left="-259" Canvas.Top="-58" Visibility="Visible">
             <Canvas.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
             </Canvas.Background>
-            <Label x:Name="waitingLabel" Content="Waiting for IFConnect Server..." Canvas.Left="423" Canvas.Top="205" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Segoe UI Semibold" Background="Transparent"/>
+            <Label x:Name="waitingLabel" Content="Waiting for IFConnect Server..." Canvas.Left="318" Canvas.Top="142" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Segoe UI Semibold" Background="Transparent"/>
+            <Label x:Name="waitingLabel_Copy" Content="Make sure InfiniteFlight is running. Enable Infinite Flight Connect in the General Settings." Canvas.Left="222" Canvas.Top="189" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="Segoe UI Semibold" Background="Transparent"/>
         </Canvas>
 
     </Canvas>

@@ -33,8 +33,8 @@ namespace IF_Utility
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            //ConnectedCanvas.Visibility = Visibility.Collapsed;
-            //UnConnectedCanvas.Visibility = Visibility.Visible;
+            ConnectedCanvas.Visibility = Visibility.Collapsed;
+            UnConnectedCanvas.Visibility = Visibility.Visible;
             receiver.DataReceived += receiver_DataReceived;
             receiver.StartListening();
         }
