@@ -31,6 +31,16 @@ namespace IF_Utility
             //mainTabControl.Visibility = System.Windows.Visibility.Collapsed;
         }
 
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            //ConnectedCanvas.Visibility = Visibility.Collapsed;
+            //UnConnectedCanvas.Visibility = Visibility.Visible;
+            receiver.DataReceived += receiver_DataReceived;
+            receiver.StartListening();
+        }
+
+
+
         bool serverInfoReceived = false;
 
         void receiver_DataReceived(object sender, EventArgs e)
@@ -78,7 +88,7 @@ namespace IF_Utility
                     {
                         client.SendCommand(new APICall { Command = "Airplane.GetState" });
 
-                        Thread.Sleep(2000);
+                        Thread.Sleep(200);
 
                     }
                     catch (Exception ex)
@@ -109,13 +119,6 @@ namespace IF_Utility
             });
         }
 
-        private void PageLoaded(object sender, RoutedEventArgs e)
-        {
-            ConnectedCanvas.Visibility = Visibility.Collapsed;
-            UnConnectedCanvas.Visibility = Visibility.Visible;
-            receiver.DataReceived += receiver_DataReceived;
-            receiver.StartListening();
-        }
 
         void client_CommandReceived(object sender, CommandReceivedEventArgs e)
         {
@@ -134,11 +137,13 @@ namespace IF_Utility
                 if (type == typeof(APIAircraftState))
                 {
                     var state = Serializer.DeserializeJson<APIAircraftState>(e.CommandString);
-                    Console.WriteLine(e.CommandString);
+                    //Console.WriteLine(e.CommandString);
                     //airplaneStateGrid.DataContext = null;
                     //airplaneStateGrid.DataContext = state;
                     pAircraftState = state;
-                    //if (autoFplDirectActive) { autoFplDirect(state); }
+                    if (FMSControl.autoFplDirectActive) { FMSControl.updateAutoNav(state); }
+                    AircraftStateControl.AircraftState = state;
+                    //AttitudeIndicator.updateAttitude(pAircraftState.Pitch, pAircraftState.Bank);
                     
                 }
                 else if (type == typeof(GetValueResponse))
@@ -190,8 +195,6 @@ namespace IF_Utility
                 {
                     var msg = Serializer.DeserializeJson<APIFlightPlan>(e.CommandString);
                     Console.WriteLine("Flight Plan: {0} items", msg.Waypoints.Length);
-                    FMSControl.FPLState = new FMS.flightPlanState();
-                    FMSControl.FPLState.fpl = msg;
                     FMSControl.fplReceived(msg);
                     foreach (var item in msg.Waypoints)
                     {
@@ -201,5 +204,14 @@ namespace IF_Utility
             }));
         }
 
+        //FPL from FPD received/selected. Copy it to the FMS.
+        private void FlightPlanDb_FplUpdated(object sender, EventArgs e)
+        {
+            FMSControl.CustomFPL.waypoints.Clear();
+            foreach (FMS.fplDetails f in FpdControl.FmsFpl)
+            {
+                FMSControl.CustomFPL.waypoints.Add(f);
+            }
+        }
     }
 }

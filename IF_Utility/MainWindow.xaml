@@ -1,14 +1,17 @@
-﻿<Window x:Name="window" x:Class="IF_Utility.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IF_Utility"
+        xmlns:Indicators="clr-namespace:Indicators;assembly=Indicators" x:Name="window" x:Class="IF_Utility.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="457.25" Width="1025.75" Loaded="PageLoaded">
+        Title="MainWindow" Height="477.25" Width="1025.75" Loaded="PageLoaded">
     <Canvas x:Name="MainCanvas" Margin="260,62,658,0" VerticalAlignment="Top">
-        <Canvas x:Name="ConnectedCanvas" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" >
-            <local:FMS x:Name="FMSControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="637" Canvas.Left="-257" Canvas.Top="-60" />
+        <Canvas x:Name="ConnectedCanvas" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" Canvas.Left="-259" Canvas.Top="-58" >
+            <local:FMS x:Name="FMSControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Canvas.Left="10" Canvas.Top="10" Height="408" Padding="1" BorderBrush="#FF0A0A0A" BorderThickness="1" />
+            <local:FlightPlanDb x:Name="FpdControl" Canvas.Left="395" Canvas.Top="10" FplUpdated="FlightPlanDb_FplUpdated" Height="408" Width="291" BorderBrush="Black" BorderThickness="1" Padding="1"/>
+            <local:AircraftStatus x:Name="AircraftStateControl" Canvas.Left="691" Canvas.Top="10" Height="408" Width="298" BorderBrush="Black" BorderThickness="1" Padding="1"/>
         </Canvas>
         <Canvas x:Name="UnConnectedCanvas" Cursor="Wait" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" Canvas.Left="-259" Canvas.Top="-58" Visibility="Collapsed">
             <Canvas.Background>

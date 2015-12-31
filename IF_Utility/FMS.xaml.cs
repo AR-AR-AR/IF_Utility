@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Fds.IFAPI;
 using System.ComponentModel;
-using System.Collections.Specialized;
 
 namespace IF_Utility
 {
     /// <summary>
-    /// Interaction logic for FMS.xaml
+    /// FMS for IF
     /// </summary>
     public partial class FMS : UserControl
     {
@@ -21,13 +19,14 @@ namespace IF_Utility
         }
 
         private APIAircraftState pAircraftState = new APIAircraftState();
-        private bool autoFplDirectActive = false;
+        public bool autoFplDirectActive = false;
 
         public FMS()
         {
             InitializeComponent();
         }
 
+        #region Flight Plan Classes
         public class fplDetails : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
@@ -72,30 +71,6 @@ namespace IF_Utility
 
         private bool pManualRetrieveFPL = false;
 
-        private void WaypointsChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            //different kind of changes that may have occurred in collection
-            if (false && CustomFplWaypoints.Count > 0 && !pManualRetrieveFPL)
-            {
-                if (e.Action == NotifyCollectionChangedAction.Add)
-                {
-                    setCustomFlightPlan();
-                }
-                if (e.Action == NotifyCollectionChangedAction.Replace)
-                {
-                    setCustomFlightPlan();
-                }
-                if (e.Action == NotifyCollectionChangedAction.Remove)
-                {
-                    setCustomFlightPlan();
-                }
-                if (e.Action == NotifyCollectionChangedAction.Move)
-                {
-                    setCustomFlightPlan();
-                }
-            }
-        }
-
         public class customFlightplan
         {
             private System.Collections.ObjectModel.ObservableCollection<fplDetails> pWaypoints;
@@ -117,6 +92,8 @@ namespace IF_Utility
             }
         }
 
+        #endregion
+
         private customFlightplan pCustomFpl;
         public customFlightplan CustomFPL
         {
@@ -124,27 +101,30 @@ namespace IF_Utility
                 if (pCustomFpl == null)
                 {
                     pCustomFpl = new customFlightplan();
-                    pCustomFpl.waypoints.CollectionChanged += new NotifyCollectionChangedEventHandler(WaypointsChanged);
                 }
                 return pCustomFpl;
             }
             set { pCustomFpl = value; }
         }
-
+        
         public System.Collections.ObjectModel.ObservableCollection<fplDetails> CustomFplWaypoints
         {
             get { return CustomFPL.waypoints; }
         }
 
+        private bool pSettingFpl;
         public void setCustomFlightPlan()
         {
+            pSettingFpl = true;
             var items = CustomFPL.waypoints;
             client.ExecuteCommand("Commands.FlightPlan.Clear");
             client.ExecuteCommand("Commands.FlightPlan.AddWaypoints", items.Select(x => new CallParameter { Name = "WPT", Value = x.WaypointName }).ToArray());
         }
 
+        #region GUI Handlers
         private void btnGetFpl_Click(object sender, RoutedEventArgs e)
         {
+            pSettingFpl = false;
             client.ExecuteCommand("FlightPlan.GetFlightPlan");
         }
 
@@ -159,47 +139,53 @@ namespace IF_Utility
             client.ExecuteCommand("Commands.FlightPlan.Clear");
         }
 
+
+        private void btnInitFlightDir_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (pFplState.fpl == null)
+            {
+                MessageBox.Show("Must get or set FPL first.");
+            }
+            else if (pFplState.fpl.Waypoints.Length > 0)
+            {
+                //updateAutoNav(pAircraftState);
+                autoFplDirectActive = true;
+            }
+        }
+
+        private void btnDisFlightDir_Click(object sender, RoutedEventArgs e)
+        {
+            autoFplDirectActive = false;
+           // pFplState = null;
+        }
+        #endregion
+
         public void fplReceived(APIFlightPlan fpl)
         {
-            pManualRetrieveFPL = true;
-            CustomFPL.waypoints.Clear(); //= new customFlightplan();
-
-            foreach (APIWaypoint wpt in fpl.Waypoints)
+            if (!pSettingFpl)
             {
-                if (wpt.Name != "WPT") {
-                    CustomFPL.addWaypoint(wpt.Name, -1, -1);
+                FPLState = new FMS.flightPlanState();
+                FPLState.fpl = fpl;
+                pManualRetrieveFPL = true;
+                CustomFPL.waypoints.Clear(); //= new customFlightplan();
+
+                foreach (APIWaypoint wpt in fpl.Waypoints)
+                {
+                    if (wpt.Name != "WPT")
+                    {
+                        CustomFPL.addWaypoint(wpt.Name, -1, -1);
+                    }
                 }
+
+                //          this.dgFpl.ItemsSource = CustomFPL.waypoints;
+                dgFpl.Items.Refresh();
+                pFplState.fplDetails = CustomFPL;
+                pManualRetrieveFPL = false;
             }
-
- //          this.dgFpl.ItemsSource = CustomFPL.waypoints;
-            dgFpl.Items.Refresh();
-            pFplState.fplDetails = CustomFPL;
-            pManualRetrieveFPL = false;
         }
 
-
-        private void dgFplEdited(object sender, DataGridCellEditEndingEventArgs e)
-        {
-  //          setCustomFlightPlan();
-            //customFlightplan tempFpl = new customFlightplan();
-            //foreach (var item in dgFpl.Items)
-            //{
-            //    if (item is fplDetails)
-            //    {
-            //        if (((fplDetails)item).WaypointName != "WPT" && ((fplDetails)item).WaypointName != null) { tempFpl.addWaypoint(((fplDetails)item).WaypointName, ((fplDetails)item).Altitude, ((fplDetails)item).Airspeed); }
-            //    }
-            //    else
-            //    {
-            //        Console.Write("");
-            //    }
-            //}
-
-            //CustomFPL = tempFpl;
-
-            //pFplState.fplDetails = CustomFPL;
-        }
-
-
+        #region AutoNAV
         public class flightPlanState
         {
             public APIFlightPlan fpl; //Entire FPL
@@ -211,8 +197,10 @@ namespace IF_Utility
             public double distToNextWpt;
             public double hdgToNextWpt;
             public double distToDest;
+            public double thisAltitude;
             public double nextAltitude;
             public double thisSpeed;
+            public double nextSpeed;
             public event EventHandler fplStateUpdate;
         }
 
@@ -223,7 +211,7 @@ namespace IF_Utility
             set { pFplState = value; }
         }
 
-        private void autoFplDirect(APIAircraftState acState)
+        public void updateAutoNav(APIAircraftState acState)
         {
             if (pFplState == null)
             {
@@ -236,6 +224,9 @@ namespace IF_Utility
                 pFplState.legIndex = 0;
                 pFplState.nextWpt = pFplState.fpl.Waypoints[1];
                 pFplState.dest = pFplState.fpl.Waypoints.Last();
+                pFplState.nextAltitude = pFplState.fplDetails.waypoints[pFplState.legIndex].Altitude;
+                pFplState.thisSpeed = pFplState.fplDetails.waypoints[pFplState.legIndex].Airspeed;
+                pFplState.nextSpeed = pFplState.fplDetails.waypoints[pFplState.legIndex].Airspeed;
             }
 
             //Get dist to next wpt
@@ -246,24 +237,40 @@ namespace IF_Utility
             {
                 pFplState.legIndex++; //next leg
                 pFplState.prevWpt = pFplState.nextWpt; //current wpt is not prev wpt
+                if(pFplState.legIndex >= pFplState.fpl.Waypoints.Count())
+                {
+                    //We hit the destination!
+                    lblNextWpt.Content = "Destination Reached!";
+                    lblDist2Next.Content = "";
+                    lblHdg2Next.Content = "";
+                    autoFplDirectActive = false;
+                    return;
+                }
                 pFplState.nextWpt = pFplState.fpl.Waypoints[pFplState.legIndex]; //target next wpt
                 pFplState.nextAltitude = pFplState.fplDetails.waypoints[pFplState.legIndex].Altitude;
                 pFplState.thisSpeed = pFplState.fplDetails.waypoints[pFplState.legIndex - 1].Airspeed;
+                pFplState.nextSpeed = pFplState.fplDetails.waypoints[pFplState.legIndex].Airspeed;
                 //Get dist to new next wpt
                 pFplState.distToNextWpt = getDistToWaypoint(acState.Location, pFplState.nextWpt);
             }
 
             lblNextWpt.Content = pFplState.nextWpt.Name;
             lblDist2Next.Content = pFplState.distToNextWpt.ToString();
+            lblAirspeedSet.Content = pFplState.thisSpeed.ToString();
+            lblAltitudeSet.Content = pFplState.nextAltitude.ToString();
 
+            //Adjust heading for magnetic declination
             double declination = acState.HeadingTrue - acState.HeadingMagnetic;
 
             //Get heading to next
             pFplState.hdgToNextWpt = getHeadingToWaypoint(acState.Location, pFplState.nextWpt) - declination;
             lblHdg2Next.Content = pFplState.hdgToNextWpt.ToString();
 
+            //Calculate VS to hit target altitude
+            double vs = calcVs(acState.AltitudeMSL, pFplState.nextAltitude, acState.GroundSpeedKts, pFplState.distToNextWpt);
+
             //Adjust AutoPilot
-            setAutoPilotParams(pFplState.nextAltitude, pFplState.hdgToNextWpt, 0, pFplState.thisSpeed);
+            setAutoPilotParams(pFplState.nextAltitude, pFplState.hdgToNextWpt, vs, pFplState.nextSpeed);
 
 
             ////Dont think we need this
@@ -280,17 +287,19 @@ namespace IF_Utility
 
         }
 
+        
+
         private void setAutoPilotParams(double altitude, double heading, double vs, double speed)
         {
             //Send parameters
             if (speed > 0) { client.ExecuteCommand("Commands.Autopilot.SetSpeed", new CallParameter[] { new CallParameter { Value = speed.ToString() } }); }
             if (altitude > 0) { client.ExecuteCommand("Commands.Autopilot.SetAltitude", new CallParameter[] { new CallParameter { Value = altitude.ToString() } }); }
-            //client.ExecuteCommand("Commands.Autopilot.SetVS", new CallParameter[] { new CallParameter { Value = vs.ToString() } });
+            client.ExecuteCommand("Commands.Autopilot.SetVS", new CallParameter[] { new CallParameter { Value = vs.ToString() } });
             client.ExecuteCommand("Commands.Autopilot.SetHeading", new CallParameter[] { new CallParameter { Value = heading.ToString() } });
             //Activate AP
             if (altitude > 0) { client.ExecuteCommand("Commands.Autopilot.SetAltitudeState", new CallParameter[] { new CallParameter { Value = "True" } }); }
             client.ExecuteCommand("Commands.Autopilot.SetHeadingState", new CallParameter[] { new CallParameter { Value = "True" } });
-            //client.ExecuteCommand("Commands.Autopilot.SetVSState", new CallParameter[] { new CallParameter { Value = "True" } });
+            client.ExecuteCommand("Commands.Autopilot.SetVSState", new CallParameter[] { new CallParameter { Value = "True" } });
             if (speed > 0) { client.ExecuteCommand("Commands.Autopilot.SetSpeedState", new CallParameter[] { new CallParameter { Value = "True" } }); }
             //if (appr) { client.ExecuteCommand("Commands.Autopilot.SetApproachModeState", new CallParameter[] { new CallParameter { Value = appr.ToString() } }); }
         }
@@ -333,25 +342,17 @@ namespace IF_Utility
             return (rad2deg(Math.Atan2(y, x)) + 360) % 360;
         }
 
-        private void btnInitFlightDir_Click(object sender, RoutedEventArgs e)
+        private double calcVs(double curAlt, double targetAlt, double groundSpeed, double distToNext)
         {
-
-            if (pFplState.fpl == null)
-            {
-                MessageBox.Show("Must get or set FPL first.");
-            }
-            else if (pFplState.fpl.Waypoints.Length > 0)
-            {
-                autoFplDirect(pAircraftState);
-                autoFplDirectActive = true;
-            }
+            double vs = 0;
+            double altDiff = targetAlt - curAlt; //If target alt is lower, this will be negative
+            double estTimeToNext = (1/groundSpeed * distToNext) * 60; //ETA in minutes
+            vs = altDiff / estTimeToNext; //VS in FPM
+            return vs;
         }
 
-        private void btnDisFlightDir_Click(object sender, RoutedEventArgs e)
-        {
-            autoFplDirectActive = false;
-            pFplState = null;
-        }
+        #endregion
+
 
 
     }
