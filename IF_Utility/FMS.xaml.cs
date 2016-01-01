@@ -142,17 +142,27 @@ namespace IF_Utility
 
         private void btnInitFlightDir_Click(object sender, RoutedEventArgs e)
         {
-
-            if (pFplState.fpl == null)
+            if (!autoFplDirectActive) //AutoNAV not active. Turn it on.
             {
-                MessageBox.Show("Must get or set FPL first.");
+                if (pFplState.fpl == null)
+                {
+                    MessageBox.Show("Must get or set FPL first.");
+                }
+                else if (pFplState.fpl.Waypoints.Length > 0)
+                {
+                    //updateAutoNav(pAircraftState);
+                    autoFplDirectActive = true;
+                    lblFmsState.Content = "AutoNAV Enabled";
+                    lblFmsState.Foreground = System.Windows.Media.Brushes.DarkGreen;
+                    btnInitFlightDir.Content = "Disable AutoNAV";
+                }
             }
-            else if (pFplState.fpl.Waypoints.Length > 0)
+            else //AutoNav running. Turn it off.
             {
-                //updateAutoNav(pAircraftState);
-                autoFplDirectActive = true;
-                lblFmsState.Content = "AutoNAV Enabled";
-                lblFmsState.Foreground = System.Windows.Media.Brushes.DarkGreen;
+                autoFplDirectActive = false;
+                lblFmsState.Content = "AutoNAV Disabled";
+                lblFmsState.Foreground = System.Windows.Media.Brushes.Red;
+                btnInitFlightDir.Content = "Enable AutoNAV";
             }
         }
 
@@ -272,7 +282,7 @@ namespace IF_Utility
 
             //Calculate VS to hit target altitude
             double vs = calcVs(acState.AltitudeMSL, pFplState.nextAltitude, acState.GroundSpeedKts, pFplState.distToNextWpt);
-
+            lblVsSet.Content = string.Format("{0:0.000}", vs);
             //Adjust AutoPilot
             setAutoPilotParams(pFplState.nextAltitude, pFplState.hdgToNextWpt, vs, pFplState.nextSpeed);
 

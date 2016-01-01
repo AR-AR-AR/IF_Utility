@@ -20,22 +20,24 @@
             </DataGrid.Columns>-->
         </DataGrid>
         <Button x:Name="btnGetFpl" Content="Retrieve FPL" HorizontalAlignment="Left" Height="26" Margin="7,211,0,0" VerticalAlignment="Top" Width="97" Click="btnGetFpl_Click"/>
-        <Button x:Name="btnInitFlightDir" Content="Enable AutoNAV" HorizontalAlignment="Left" Margin="24,50,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="btnInitFlightDir_Click"/>
-        <Button x:Name="btnDisFlightDir" Content="Disable AutoNAV" HorizontalAlignment="Left" Margin="24,84,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="btnDisFlightDir_Click"/>
-        <Label x:Name="label" Content="Next" HorizontalAlignment="Left" Margin="243,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.286,0.385"/>
-        <Label x:Name="label_Copy" Content="Dist To Next" HorizontalAlignment="Left" Margin="203,25,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy1" Content="Hdg To Next" HorizontalAlignment="Left" Margin="201,51,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblNextWpt" Content="Next" HorizontalAlignment="Left" Margin="278,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.286,0.385"/>
-        <Label x:Name="lblDist2Next" Content="Dist To Next" HorizontalAlignment="Left" Margin="278,25,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblHdg2Next" Content="Hdg To Next" HorizontalAlignment="Left" Margin="278,51,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnInitFlightDir" Content="Enable AutoNAV" HorizontalAlignment="Left" Margin="24,50,0,0" VerticalAlignment="Top" Width="136" Height="57" Click="btnInitFlightDir_Click" FontWeight="Bold" FontSize="16" />
+        <!--<Button x:Name="btnDisFlightDir" Content="Disable AutoNAV" HorizontalAlignment="Left" Margin="24,84,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="btnDisFlightDir_Click"/> -->
+        <Label x:Name="label" Content="Next" HorizontalAlignment="Left" Margin="243,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.286,0.385"/>
+        <Label x:Name="label_Copy" Content="Dist To Next" HorizontalAlignment="Left" Margin="203,29,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy1" Content="Hdg To Next" HorizontalAlignment="Left" Margin="201,55,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblNextWpt" Content="---" HorizontalAlignment="Left" Margin="278,6,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.286,0.385"/>
+        <Label x:Name="lblDist2Next" Content="---" HorizontalAlignment="Left" Margin="278,29,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblHdg2Next" Content="---" HorizontalAlignment="Left" Margin="278,55,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnSetFpl" Content="Set FPL" HorizontalAlignment="Left" Height="26" Margin="109,211,0,0" VerticalAlignment="Top" Width="87" Click="btnSetFpl_Click"/>
         <Button x:Name="btnClrFpl" Content="Clear FPL" HorizontalAlignment="Left" Height="25" Margin="201,212,0,0" VerticalAlignment="Top" Width="93" Click="btnClrFpl_Click"/>
         <Label x:Name="label1" Content="If FPL is modified in IF, press 'Retrieve FPL' to sync with IF. &#xA;If FPL is modified here, press 'Set FPL' to push change to IF." HorizontalAlignment="Left" Margin="7,162,0,0" VerticalAlignment="Top" Height="44" Width="357" BorderThickness="1" VerticalContentAlignment="Center" UseLayoutRounding="False" BorderBrush="Black"/>
-        <Label x:Name="label_Copy2" Content="Airspeed Set" HorizontalAlignment="Left" Margin="203,77,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy3" Content="Altitude Set" HorizontalAlignment="Left" Margin="208,103,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblAirspeedSet" Content="Airspeed set" HorizontalAlignment="Left" Margin="278,77,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblAltitudeSet" Content="Alt Set" HorizontalAlignment="Left" Margin="278,103,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy2" Content="Airspeed Set" HorizontalAlignment="Left" Margin="203,81,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy3" Content="Altitude Set" HorizontalAlignment="Left" Margin="208,107,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblAirspeedSet" Content="---" HorizontalAlignment="Left" Margin="278,81,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblAltitudeSet" Content="---" HorizontalAlignment="Left" Margin="278,107,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblFmsState" Content="AutoNAV Disabled" HorizontalAlignment="Left" Margin="7,8,0,0" VerticalAlignment="Top" Width="186" FontSize="18.667" Foreground="Red" FontWeight="Bold"/>
+        <Label x:Name="label_Copy4" Content="VS Set" HorizontalAlignment="Left" Margin="208,131,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblVsSet" Content="---" HorizontalAlignment="Left" Margin="278,131,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
