@@ -46,6 +46,7 @@ namespace IF_Utility
         public FlightPlanDb()
         {
             InitializeComponent();
+            fpdLnk.RequestNavigate += (s, e) => { System.Diagnostics.Process.Start(e.Uri.ToString()); };
         }
 
         private List<FlightPlanDatabase.ApiDataTypes.FlightPlanSummary> pFplList;
