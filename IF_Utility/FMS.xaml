@@ -32,7 +32,7 @@
         <Button x:Name="btnClrFpl" Content="Clear FPL" HorizontalAlignment="Left" Height="25" Margin="201,212,0,0" VerticalAlignment="Top" Width="93" Click="btnClrFpl_Click"/>
         <Label x:Name="label1" Content="If FPL is modified in IF, press 'Retrieve FPL' to sync with IF. &#xA;If FPL is modified here, press 'Set FPL' to push change to IF." HorizontalAlignment="Left" Margin="7,162,0,0" VerticalAlignment="Top" Height="44" Width="357" BorderThickness="1" VerticalContentAlignment="Center" UseLayoutRounding="False" BorderBrush="Black"/>
         <Label x:Name="label_Copy2" Content="Airspeed Set" HorizontalAlignment="Left" Margin="203,77,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy3" Content="Altitude Set" HorizontalAlignment="Left" Margin="201,103,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy3" Content="Altitude Set" HorizontalAlignment="Left" Margin="208,103,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblAirspeedSet" Content="Airspeed set" HorizontalAlignment="Left" Margin="278,77,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblAltitudeSet" Content="Alt Set" HorizontalAlignment="Left" Margin="278,103,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblFmsState" Content="AutoNAV Disabled" HorizontalAlignment="Left" Margin="7,8,0,0" VerticalAlignment="Top" Width="186" FontSize="18.667" Foreground="Red" FontWeight="Bold"/>
