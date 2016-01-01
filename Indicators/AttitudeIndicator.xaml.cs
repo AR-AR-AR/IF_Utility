@@ -50,7 +50,23 @@ namespace Indicators
            // Point center = centerCircle.TranslatePoint(new Point(0, 0), container);
 
             TransformGroup tg = new TransformGroup();
-            TranslateTransform t = new TranslateTransform(0, attitude.pitch*5.5);
+
+            //The attitude scale is 5.5px/deg until +/-30deg where it changes to ~2.75px/deg
+            double translation = 0.0;
+            if (attitude.pitch > 30)
+            {
+                translation = (5.5 * 30) + ((attitude.pitch - 30) * 2.75);
+            }
+            else if (attitude.pitch < -30)
+            {
+                translation = (5.5 * -30) + ((attitude.pitch + 30) * 2.75);
+            }
+            else //+/-30 deg
+            {
+                translation = attitude.pitch * 5.5;
+            }
+
+            TranslateTransform t = new TranslateTransform(0, translation);
             RotateTransform r = new RotateTransform(attitude.roll); //, center.X, center.Y); // (horizon.X2 - horizon.X1) / 2, (horizon.Y2 - horizon.Y1) / 2);
             //if (attitude.pitch < 0 && attitude.roll < 0)
             //{

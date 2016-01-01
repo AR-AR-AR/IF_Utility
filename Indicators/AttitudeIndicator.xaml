@@ -9,7 +9,9 @@
         <Canvas HorizontalAlignment="Left" Height="295" VerticalAlignment="Top" Width="293">
             <Canvas x:Name="attitudeCanvas" ClipToBounds="True" Height="280" Canvas.Left="10" Canvas.Top="10" Width="280"  Background="LightGray">
                 <!---->
-
+<Canvas x:Name="scaleCanvas" Height="733" Width="305" Canvas.Top="-227" RenderTransformOrigin="0.5,0.5" Canvas.Left="-14">
+                <Image x:Name="attitudeScale" Source="pack://siteoforigin:,,,/Resources/attitudePitchScale.png" RenderTransformOrigin="0.5,0.5" Canvas.Left="5" Width="300" Height="744" />
+            </Canvas>
                 <Border x:Name="ArtHorizon" BorderBrush="Black" BorderThickness="1" Height="563" Canvas.Left="-141" Canvas.Top="-141" Width="559" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -28,11 +30,7 @@
                         <TextBlock Text="50&#xA;&#xA;&#xA;&#xA;30&#xA;&#xA;&#xA;&#xA;10&#xA;&#xA;&#xA;&#xA;-10&#xA;&#xA;&#xA;&#xA;-30&#xA;&#xA;&#xA;&#xA;-50" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Width="36" Canvas.Left="197" Canvas.Top="62"/>
                     </Canvas>
                 </Border>
-
                 <Path x:Name="PitchScaleLines" Stroke="Black" StrokeThickness="3" Data="M0,0 H280 V40 H0 V80 H280 V120 H0 V160 H280 V200 H0 V240 H280 V320 H0 V320 H280 V360 H0 V400 H280 V440 H0 V480 H280 V520 H0 V560 H280" Canvas.Top="-141" Stretch="Fill" Width="559" Canvas.Left="-141" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed"/>
-                <Canvas x:Name="scaleCanvas" Height="730" Width="201" Canvas.Left="38" Canvas.Top="-216" RenderTransformOrigin="0.5,0.5">
-                <Image x:Name="attitudeScale" Source="pack://siteoforigin:,,,/Resources/attitudePitchScale.png" RenderTransformOrigin="0.5,0.5" Canvas.Left="1" />
-                    </Canvas>
                 <!--Stretch="Fill" Height="670"  Width="235" -->
                 <Path Fill="Gray" Stroke="Black" Width="280" Height="280" Stretch="Fill">
                     <Path.Data>
@@ -198,7 +196,10 @@
                         </Line.RenderTransform>
                     </Line>
                 </Canvas>
+
+
             </Canvas>
+
         </Canvas>
     </Grid>
 </UserControl>
