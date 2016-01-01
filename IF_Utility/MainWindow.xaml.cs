@@ -143,7 +143,7 @@ namespace IF_Utility
                     pAircraftState = state;
                     if (FMSControl.autoFplDirectActive) { FMSControl.updateAutoNav(state); }
                     AircraftStateControl.AircraftState = state;
-                    //AttitudeIndicator.updateAttitude(pAircraftState.Pitch, pAircraftState.Bank);
+                    AttitudeIndicator.updateAttitude(pAircraftState.Pitch, pAircraftState.Bank);
                     
                 }
                 else if (type == typeof(GetValueResponse))
