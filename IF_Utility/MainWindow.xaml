@@ -6,14 +6,15 @@
         xmlns:local="clr-namespace:IF_Utility"
         xmlns:Indicators="clr-namespace:Indicators;assembly=Indicators" x:Name="window" x:Class="IF_Utility.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="477.25" Width="1025.75" Loaded="PageLoaded">
+        Title="IF Utility" Height="477.25" Width="1025.75" Loaded="PageLoaded">
     <Canvas x:Name="MainCanvas" Margin="260,62,658,0" VerticalAlignment="Top">
-        <Canvas x:Name="ConnectedCanvas" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" Canvas.Left="-259" Canvas.Top="-58" >
-            <local:FMS x:Name="FMSControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Canvas.Left="10" Canvas.Top="10" Height="408" Padding="1" BorderBrush="#FF0A0A0A" BorderThickness="1" />
-            <local:FlightPlanDb x:Name="FpdControl" Canvas.Left="395" Canvas.Top="10" FplUpdated="FlightPlanDb_FplUpdated" Height="408" Width="291" BorderBrush="Black" BorderThickness="1" Padding="1"/>
-            <local:AircraftStatus x:Name="AircraftStateControl" Canvas.Left="691" Canvas.Top="10" Height="408" Width="298" BorderBrush="Black" BorderThickness="1" Padding="1"/>
+        <Canvas x:Name="ConnectedCanvas" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="487" Canvas.Left="-259" Canvas.Top="-58" >
+            <local:FMS x:Name="FMSControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Canvas.Left="10" Canvas.Top="25" Height="408" Padding="1" BorderBrush="#FF0A0A0A" BorderThickness="1" />
+            <local:FlightPlanDb x:Name="FpdControl" Canvas.Left="395" Canvas.Top="25" FplUpdated="FlightPlanDb_FplUpdated" Height="408" Width="291" BorderBrush="Black" BorderThickness="1" Padding="1"/>
+            <local:AircraftStatus x:Name="AircraftStateControl" Canvas.Left="691" Canvas.Top="25" Height="408" Width="298" BorderBrush="Black" BorderThickness="1" Padding="1"/>
+            <Label x:Name="lblStatus" Content="Not Connected." Canvas.Left="10" Canvas.Top="-1" Width="979"/>
         </Canvas>
-        <Canvas x:Name="UnConnectedCanvas" Cursor="Wait" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" Canvas.Left="-259" Canvas.Top="-58" Visibility="Visible">
+        <Canvas x:Name="UnConnectedCanvas" Cursor="Wait" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" Canvas.Left="-259" Canvas.Top="-58" Visibility="Collapsed">
             <Canvas.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
             </Canvas.Background>

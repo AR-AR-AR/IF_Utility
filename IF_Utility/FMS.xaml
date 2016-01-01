@@ -20,8 +20,8 @@
             </DataGrid.Columns>-->
         </DataGrid>
         <Button x:Name="btnGetFpl" Content="Retrieve FPL" HorizontalAlignment="Left" Height="26" Margin="7,211,0,0" VerticalAlignment="Top" Width="97" Click="btnGetFpl_Click"/>
-        <Button x:Name="btnInitFlightDir" Content="Enable AutoNAV" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="btnInitFlightDir_Click"/>
-        <Button x:Name="btnDisFlightDir" Content="Disable AutoNAV" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="btnDisFlightDir_Click"/>
+        <Button x:Name="btnInitFlightDir" Content="Enable AutoNAV" HorizontalAlignment="Left" Margin="24,50,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="btnInitFlightDir_Click"/>
+        <Button x:Name="btnDisFlightDir" Content="Disable AutoNAV" HorizontalAlignment="Left" Margin="24,84,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="btnDisFlightDir_Click"/>
         <Label x:Name="label" Content="Next" HorizontalAlignment="Left" Margin="243,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.286,0.385"/>
         <Label x:Name="label_Copy" Content="Dist To Next" HorizontalAlignment="Left" Margin="203,25,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy1" Content="Hdg To Next" HorizontalAlignment="Left" Margin="201,51,0,0" VerticalAlignment="Top"/>
@@ -35,6 +35,7 @@
         <Label x:Name="label_Copy3" Content="Altitude Set" HorizontalAlignment="Left" Margin="201,103,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblAirspeedSet" Content="Airspeed set" HorizontalAlignment="Left" Margin="278,77,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblAltitudeSet" Content="Alt Set" HorizontalAlignment="Left" Margin="278,103,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblFmsState" Content="AutoNAV Disabled" HorizontalAlignment="Left" Margin="7,8,0,0" VerticalAlignment="Top" Width="186" FontSize="18.667" Foreground="Red" FontWeight="Bold"/>
 
     </Grid>
 </UserControl>

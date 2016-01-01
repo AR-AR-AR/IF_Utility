@@ -151,12 +151,16 @@ namespace IF_Utility
             {
                 //updateAutoNav(pAircraftState);
                 autoFplDirectActive = true;
+                lblFmsState.Content = "AutoNAV Enabled";
+                lblFmsState.Foreground = System.Windows.Media.Brushes.DarkGreen;
             }
         }
 
         private void btnDisFlightDir_Click(object sender, RoutedEventArgs e)
         {
             autoFplDirectActive = false;
+            lblFmsState.Content = "AutoNAV Disabled";
+            lblFmsState.Foreground = System.Windows.Media.Brushes.Red;
            // pFplState = null;
         }
         #endregion
@@ -224,9 +228,9 @@ namespace IF_Utility
                 pFplState.legIndex = 0;
                 pFplState.nextWpt = pFplState.fpl.Waypoints[1];
                 pFplState.dest = pFplState.fpl.Waypoints.Last();
-                pFplState.nextAltitude = pFplState.fplDetails.waypoints[pFplState.legIndex].Altitude;
+                pFplState.nextAltitude = pFplState.fplDetails.waypoints[pFplState.legIndex+1].Altitude;
                 pFplState.thisSpeed = pFplState.fplDetails.waypoints[pFplState.legIndex].Airspeed;
-                pFplState.nextSpeed = pFplState.fplDetails.waypoints[pFplState.legIndex].Airspeed;
+                pFplState.nextSpeed = pFplState.fplDetails.waypoints[pFplState.legIndex+1].Airspeed;
             }
 
             //Get dist to next wpt
@@ -255,8 +259,8 @@ namespace IF_Utility
             }
 
             lblNextWpt.Content = pFplState.nextWpt.Name;
-            lblDist2Next.Content = pFplState.distToNextWpt.ToString();
-            lblAirspeedSet.Content = pFplState.thisSpeed.ToString();
+            lblDist2Next.Content = String.Format("{0:0.000}", pFplState.distToNextWpt);
+            lblAirspeedSet.Content = String.Format("{0:0.000}", pFplState.thisSpeed);
             lblAltitudeSet.Content = pFplState.nextAltitude.ToString();
 
             //Adjust heading for magnetic declination
@@ -264,7 +268,7 @@ namespace IF_Utility
 
             //Get heading to next
             pFplState.hdgToNextWpt = getHeadingToWaypoint(acState.Location, pFplState.nextWpt) - declination;
-            lblHdg2Next.Content = pFplState.hdgToNextWpt.ToString();
+            lblHdg2Next.Content = String.Format("{0:0.000}", pFplState.hdgToNextWpt);
 
             //Calculate VS to hit target altitude
             double vs = calcVs(acState.AltitudeMSL, pFplState.nextAltitude, acState.GroundSpeedKts, pFplState.distToNextWpt);

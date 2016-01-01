@@ -167,7 +167,7 @@ namespace IF_Utility
                 else if (type == typeof(IFAPIStatus))
                 {
                     var status = Serializer.DeserializeJson<IFAPIStatus>(e.CommandString);
-
+                    updateConnectionStatus(status);
                     //versionTextBlock.Text = status.AppVersion;
                     //userNameTextBlock.Text = status.LoggedInUser;
                     //deviceNameTextBlock.Text = status.DeviceName;
@@ -204,14 +204,31 @@ namespace IF_Utility
             }));
         }
 
+        private bool pFirstConnect = true;
+        private void updateConnectionStatus(IFAPIStatus status)
+        {
+            if (pFirstConnect)
+            {
+                pFirstConnect = false;
+                lblStatus.Content = "Connected to: " + status.DeviceName + " -- User: " + status.LoggedInUser +
+                    " -- App Version: " + status.AppVersion;
+            }
+
+        }
+
         //FPL from FPD received/selected. Copy it to the FMS.
         private void FlightPlanDb_FplUpdated(object sender, EventArgs e)
         {
-            FMSControl.CustomFPL.waypoints.Clear();
+            FMSControl.FPLState = new FMS.flightPlanState(); //Clear state of FMS
+            FMSControl.CustomFPL.waypoints.Clear(); //Clear FPL
+            
             foreach (FMS.fplDetails f in FpdControl.FmsFpl)
-            {
+            { //Load waypoints to FMS
                 FMSControl.CustomFPL.waypoints.Add(f);
             }
+            FMSControl.FPLState.fpl = FpdControl.ApiFpl;
+            FMSControl.FPLState.fplDetails = FMSControl.CustomFPL;
+
         }
     }
 }
