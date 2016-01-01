@@ -35,6 +35,14 @@ namespace IF_Utility
             }
         }
 
+        private Fds.IFAPI.APIFlightPlan pApiFpl;
+        public Fds.IFAPI.APIFlightPlan ApiFpl
+        {
+            get { return pApiFpl; }
+            set { pApiFpl = value; }
+        }
+
+
         public FlightPlanDb()
         {
             InitializeComponent();
@@ -83,9 +91,18 @@ namespace IF_Utility
                 FlightPlanDatabase.ApiDataTypes.FlightPlanDetails planDetail = fd.getPlan(cbFpls.SelectedValue.ToString().Split(' ').First());
                 //FMSControl.CustomFPL.waypoints.Clear();
                 List<FMS.fplDetails> fpl = new List<FMS.fplDetails>();
+                pApiFpl = new Fds.IFAPI.APIFlightPlan();
+                List<Fds.IFAPI.APIWaypoint> apiWpts = new List<Fds.IFAPI.APIWaypoint>();
 
                 foreach (FlightPlanDatabase.ApiDataTypes.Node wpt in planDetail.route.nodes)
                 {
+                    Fds.IFAPI.APIWaypoint apiWpt = new Fds.IFAPI.APIWaypoint();
+                    apiWpt.Name = wpt.ident;
+                    apiWpt.Code = wpt.name;
+                    apiWpt.Latitude = wpt.lat;
+                    apiWpt.Longitude = wpt.lon;
+                    apiWpts.Add(apiWpt);
+
                     FMS.fplDetails n = new FMS.fplDetails();
                     n.WaypointName = wpt.ident;
                     n.Altitude = wpt.alt;
@@ -93,6 +110,9 @@ namespace IF_Utility
                     //FMSControl.CustomFPL.waypoints.Add(n);
                     fpl.Add(n);
                 }
+
+                pApiFpl.Waypoints = apiWpts.ToArray();
+
                 FmsFpl = fpl;
             }
         }
