@@ -53,7 +53,7 @@ namespace IFConnect
                         }
                         catch (Exception ex)
                         {
-
+                            Console.WriteLine("Error! " + ex.ToString());
                         }
                     }
                 });
