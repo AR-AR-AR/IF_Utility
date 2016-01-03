@@ -93,7 +93,7 @@ namespace IF_Utility
                     }
                     catch (Exception ex)
                     {
-
+                        Console.WriteLine("Error! " + ex.ToString());
                     }
                 }
             });
@@ -113,7 +113,7 @@ namespace IF_Utility
                     }
                     catch (Exception ex)
                     {
-
+                        Console.WriteLine("Error! " + ex.ToString());
                     }
                 }
             });
