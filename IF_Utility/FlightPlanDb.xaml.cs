@@ -88,34 +88,49 @@ namespace IF_Utility
         {
             if (cbFpls.Items.Count > 0 && cbFpls.SelectedValue != null)
             {
-                FlightPlanDatabase.FpdApi fd = new FlightPlanDatabase.FpdApi();
-                FlightPlanDatabase.ApiDataTypes.FlightPlanDetails planDetail = fd.getPlan(cbFpls.SelectedValue.ToString().Split(' ').First());
-                //FMSControl.CustomFPL.waypoints.Clear();
-                List<FMS.fplDetails> fpl = new List<FMS.fplDetails>();
-                pApiFpl = new Fds.IFAPI.APIFlightPlan();
-                List<Fds.IFAPI.APIWaypoint> apiWpts = new List<Fds.IFAPI.APIWaypoint>();
-
-                foreach (FlightPlanDatabase.ApiDataTypes.Node wpt in planDetail.route.nodes)
-                {
-                    Fds.IFAPI.APIWaypoint apiWpt = new Fds.IFAPI.APIWaypoint();
-                    apiWpt.Name = wpt.ident;
-                    apiWpt.Code = wpt.name;
-                    apiWpt.Latitude = wpt.lat;
-                    apiWpt.Longitude = wpt.lon;
-                    apiWpts.Add(apiWpt);
-
-                    FMS.fplDetails n = new FMS.fplDetails();
-                    n.WaypointName = wpt.ident;
-                    n.Altitude = wpt.alt;
-
-                    //FMSControl.CustomFPL.waypoints.Add(n);
-                    fpl.Add(n);
-                }
-
-                pApiFpl.Waypoints = apiWpts.ToArray();
-
-                FmsFpl = fpl;
+                string fplID = cbFpls.SelectedValue.ToString().Split(' ').First();
+                loadFpdFplFromId(fplID);
+                txtFplId.Text = fplID;
             }
+        }
+
+        private void btnLoadFromId_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtFplId.Text.Length > 0)
+            {
+                loadFpdFplFromId(txtFplId.Text);
+            }
+        }
+
+        private void loadFpdFplFromId(string id)
+        {
+            FlightPlanDatabase.FpdApi fd = new FlightPlanDatabase.FpdApi();
+            FlightPlanDatabase.ApiDataTypes.FlightPlanDetails planDetail = fd.getPlan(id);
+            //FMSControl.CustomFPL.waypoints.Clear();
+            List<FMS.fplDetails> fpl = new List<FMS.fplDetails>();
+            pApiFpl = new Fds.IFAPI.APIFlightPlan();
+            List<Fds.IFAPI.APIWaypoint> apiWpts = new List<Fds.IFAPI.APIWaypoint>();
+
+            foreach (FlightPlanDatabase.ApiDataTypes.Node wpt in planDetail.route.nodes)
+            {
+                Fds.IFAPI.APIWaypoint apiWpt = new Fds.IFAPI.APIWaypoint();
+                apiWpt.Name = wpt.ident;
+                apiWpt.Code = wpt.name;
+                apiWpt.Latitude = wpt.lat;
+                apiWpt.Longitude = wpt.lon;
+                apiWpts.Add(apiWpt);
+
+                FMS.fplDetails n = new FMS.fplDetails();
+                n.WaypointName = wpt.ident;
+                n.Altitude = wpt.alt;
+
+                //FMSControl.CustomFPL.waypoints.Add(n);
+                fpl.Add(n);
+            }
+
+            pApiFpl.Waypoints = apiWpts.ToArray();
+
+            FmsFpl = fpl;
         }
 
         private void txtFromICAO_GotFocus(object sender, RoutedEventArgs e)
@@ -155,5 +170,26 @@ namespace IF_Utility
                 tb.Text = "KSAN";
             }
         }
+
+        private void txtFplId_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            tb.Text = string.Empty;
+            tb.Foreground = Brushes.Black;
+            tb.GotFocus -= txtDestICAO_GotFocus;
+        }
+
+        private void txtFplId_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            if (tb.Text == string.Empty)
+            {
+                tb.Foreground = Brushes.LightGray;
+                tb.GotFocus += txtDestICAO_GotFocus;
+                tb.Text = "81896";
+            }
+
+        }
+
     }
 }
