@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IF_Utility"
+    xmlns:iffms="clr-namespace:IF_FMS;assembly=IF_FMS"
+    xmlns:fpd="clr-namespace:FlightPlanDatabase;assembly=FlightPlanDatabase"
         xmlns:Indicators="clr-namespace:Indicators;assembly=Indicators" x:Name="window" x:Class="IF_Utility.MainWindow"
         mc:Ignorable="d"
         Title="IF Utility" Height="714.582" Width="1009.751" Loaded="PageLoaded">
     <Canvas x:Name="MainCanvas" Margin="260,62,658,0" VerticalAlignment="Top">
         <Canvas x:Name="ConnectedCanvas" Width="1000" Height="664" Canvas.Left="-259" Canvas.Top="-58" >
-            <local:FMS x:Name="FMSControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Canvas.Left="10" Canvas.Top="20" Height="408" Padding="1" BorderBrush="#FF0A0A0A" BorderThickness="1" />
-            <local:FlightPlanDb x:Name="FpdControl" Canvas.Left="395" Canvas.Top="20" FplUpdated="FlightPlanDb_FplUpdated" Height="408" Width="291" BorderBrush="Black" BorderThickness="1" Padding="1"/>
-            <local:AircraftStatus x:Name="AircraftStateControl" Canvas.Left="691" Canvas.Top="20" Height="408" Width="298" BorderBrush="Black" BorderThickness="1" Padding="1"/>
+            <iffms:FMS x:Name="FMSControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="380" Canvas.Left="10" Canvas.Top="20" Height="408" Padding="1" BorderBrush="#FF0A0A0A" BorderThickness="1" />
+            <fpd:FlightPlanDb x:Name="FpdControl" Canvas.Left="395" Canvas.Top="20" FplUpdated="FlightPlanDb_FplUpdated" Height="408" Width="291" BorderBrush="Black" BorderThickness="1" Padding="1"/>
+            <iffms:AircraftStatus x:Name="AircraftStateControl" Canvas.Left="691" Canvas.Top="20" Height="408" Width="298" BorderBrush="Black" BorderThickness="1" Padding="1"/>
             <Label x:Name="lblStatus" Content="Not Connected." Canvas.Left="10" Canvas.Top="-4" Width="979"/>
             <Border BorderBrush="Black" BorderThickness="1" Height="231" Canvas.Left="10" Canvas.Top="434" Width="979">
                 <Indicators:AttitudeIndicator x:Name="AttitudeIndicator" Height="Auto" Width="Auto" Margin="340,-30,341,21" RenderTransformOrigin="0.5,0.5">

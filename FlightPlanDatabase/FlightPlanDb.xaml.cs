@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using IF_FMS;
 
-namespace IF_Utility
+namespace FlightPlanDatabase
 {
     /// <summary>
     /// Interaction logic for FlightPlanDb.xaml

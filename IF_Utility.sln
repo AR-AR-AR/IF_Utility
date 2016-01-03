@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightPlanDatabase", "Fligh
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "IFUtilitySetup", "IFUtilitySetup\IFUtilitySetup.vdproj", "{329872E0-9BA7-403F-998D-1D113BC7FA6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IF_FMS", "IF_FMS\IF_FMS.csproj", "{AF20C0E4-1086-4C92-ACB2-228EB9734D60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{D211E1DD-798C-40B2-B502-120EFA16D9A1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{329872E0-9BA7-403F-998D-1D113BC7FA6A}.Debug|Any CPU.ActiveCfg = Debug
 		{329872E0-9BA7-403F-998D-1D113BC7FA6A}.Release|Any CPU.ActiveCfg = Release
+		{AF20C0E4-1086-4C92-ACB2-228EB9734D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF20C0E4-1086-4C92-ACB2-228EB9734D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF20C0E4-1086-4C92-ACB2-228EB9734D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF20C0E4-1086-4C92-ACB2-228EB9734D60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

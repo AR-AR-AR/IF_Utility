@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using Fds.IFAPI;
 using System.ComponentModel;
 
-namespace IF_Utility
+namespace IF_FMS
 {
     /// <summary>
     /// FMS for IF

@@ -56,34 +56,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AircraftStatus.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FlightPlanDb.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FMS.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AircraftStatus.xaml.cs">
-      <DependentUpon>AircraftStatus.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FlightPlanDb.xaml.cs">
-      <DependentUpon>FlightPlanDb.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FMS.xaml.cs">
-      <DependentUpon>FMS.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -126,13 +105,14 @@
       <Project>{89c1f7c9-5f59-4c36-a3eb-0f39147bb6d9}</Project>
       <Name>IFConnect</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IF_FMS\IF_FMS.csproj">
+      <Project>{af20c0e4-1086-4c92-acb2-228eb9734d60}</Project>
+      <Name>IF_FMS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Indicators\Indicators.csproj">
       <Project>{6e9749fb-c09f-4522-ab07-b34aade5ca69}</Project>
       <Name>Indicators</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\light.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

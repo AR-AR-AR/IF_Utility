@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IF_Utility
+namespace IF_FMS
 {
     /// <summary>
     /// Interaction logic for AircraftStatus.xaml
